@@ -57,24 +57,20 @@ public class MarketDataService {
 	private List<FlippingOpportunity> findOpportunitiesForQuality(Equipment equipment, List<MarketData> marketDataList) {
 	    List<FlippingOpportunity> opportunities = new ArrayList<>();
 	    
-	    // Filter valid data first
 	    List<MarketData> validData = marketDataList.stream()
 	        .filter(d -> d.getSellPriceMin() > 0 && d.getBuyPriceMin() > 0)
 	        .collect(Collectors.toList());
 	    
 	    if (validData.size() < 2) return opportunities;
 	    
-	    // Sort by sell price (ascending) for finding cheapest sell
 	    List<MarketData> sortedBySell = validData.stream()
 	        .sorted(Comparator.comparing(MarketData::getSellPriceMin))
 	        .collect(Collectors.toList());
 	    
-	    // Sort by buy price (descending) for finding highest buy
 	    List<MarketData> sortedByBuy = validData.stream()
 	        .sorted(Comparator.comparing(MarketData::getBuyPriceMin).reversed())
 	        .collect(Collectors.toList());
 	    
-	    // Only need to check best buy against each sell
 	    for (MarketData sellData : sortedBySell) {
 	        for (MarketData buyData : sortedByBuy) {
 	            if (sellData.getCity().equals(buyData.getCity())) continue;
