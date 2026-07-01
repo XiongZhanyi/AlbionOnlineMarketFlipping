@@ -13,33 +13,28 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 
 import lombok.NonNull;
 
-public final class CachedMarketDataProvider extends MarketDataProvider {
+public final class MarketDataCache {
 	
-    private final MarketDataProvider delegate;
     private final Cache<Equipment, List<MarketData>> cache;
 
-    public CachedMarketDataProvider(MarketDataProvider delegate) {
-        this.delegate = delegate;
+    public MarketDataCache() {
         this.cache = Caffeine.newBuilder()
-            .expireAfterWrite(Duration.ofMinutes(30))
-            .maximumSize(1000000)
-            .build();
+                .expireAfterWrite(Duration.ofMinutes(40))
+                .maximumSize(1_000_000)
+                .build();
     }
 
-	@Override
 	protected @NonNull Map<Equipment, List<MarketData>> fetchMarketDataOfEquipments(List<Equipment> equipments) {
-        List<Equipment> equipmentsMissingMarketData = equipments.stream()
-                .filter(e -> cache.getIfPresent(e) == null)
-                .toList();
-
-        if (!equipmentsMissingMarketData.isEmpty()) {
-            cache.putAll(delegate.fetchMarketDataOfEquipments(equipmentsMissingMarketData));
-        }
-        
         return equipments.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        equipment -> cache.getIfPresent(equipment)
+                        equipment -> cache.getIfPresent(equipment) == null
+                                ? List.of()
+                                : cache.getIfPresent(equipment)
                 ));
 	}
+    
+    public void putAll(Map<Equipment, List<MarketData>> values) {
+        cache.putAll(values);
+    }
 }

@@ -11,6 +11,6 @@ import lombok.NonNull;
 abstract sealed class MarketDataProvider
 	permits AlbionAPIMarketDataProvider, CachedMarketDataProvider {
 
-	protected abstract @NonNull Map<Equipment, List<MarketData>> fetchMarketDataOfEquipments(List<Equipment> equipments) ;
+	protected abstract @NonNull Map<Equipment, List<MarketData>> fetchMarketDataOfEquipments(@NonNull List<Equipment> equipments) ;
 
 }

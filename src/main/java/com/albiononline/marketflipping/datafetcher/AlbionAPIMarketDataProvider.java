@@ -78,7 +78,6 @@ public final class AlbionAPIMarketDataProvider extends MarketDataProvider {
     	                responseBody,
     	                new TypeReference<List<MarketData>>() {}
     	        ));
-
     	    } catch (IOException | InterruptedException e) {
     	        System.out.println(e);
     	    }
@@ -87,13 +86,14 @@ public final class AlbionAPIMarketDataProvider extends MarketDataProvider {
     	long elapsedMs = (System.nanoTime() - start) / 1_000_000;
     	System.out.println("fetchMarketDataOfEquipments took " + elapsedMs + " ms");
     	
-    	return equipments.stream()
-    		    .collect(Collectors.toMap(
-    		        Function.identity(),
-    		        equipment -> data.stream()
-    		            .filter(marketData -> marketData.getItemId().equals(equipment.getCodeName()))
-    		            .collect(Collectors.toList())
-    		    ));
+    	Map<String, Equipment> equipmentByCode = equipments.stream()
+    		    .collect(Collectors.toMap(Equipment::getCodeName, Function.identity()));
+    	
+    	return data.stream()
+        		.filter(marketData -> equipmentByCode.containsKey(marketData.getItemId()))
+        		.collect(Collectors.groupingBy(
+        			marketData -> equipmentByCode.get(marketData.getItemId())
+        		));    
     }
     
     private @NonNull List<String> buildURLsForEquipments(@NonNull List<Equipment> equipments) {

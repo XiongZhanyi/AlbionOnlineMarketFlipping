@@ -15,7 +15,7 @@ public enum Arcanist implements EquipmentType {
     WITCHWORK_STAFF("MAIN_ARCANESTAFF_UNDEAD", "Witchwork Staff"),
     OCCULT_STAFF("2H_ARCANESTAFF_HELL", "Occult Staff"),
     MALEVOLENT_LOCUS("2H_ENIGMATICORB_MORGANA", "Malevolent Locus"),
-    EVENSONG("2H_ARCANESTAFF_CRYSTAL", "Evensong"),
+    EVENSONG("2H_ARCANE_RINGPAIR_AVALON", "Evensong"),
     ASTRAL_STAFF("2H_ARCANESTAFF_CRYSTAL", "Astral Staff");
 	
     private final @NonNull String codeName;

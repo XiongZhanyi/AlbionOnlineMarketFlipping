@@ -17,10 +17,10 @@ public class MarketData {
     private String itemId;
 
     @JsonProperty("city")
-    private String city;
+    private City city;
     
     @JsonProperty("quality")
-    private int quality;
+    private Quality quality;
 
     @JsonProperty("sell_price_min")
     private int sellPriceMin;
