@@ -85,7 +85,7 @@ public class MarketDataService {
 	                    buyData.getBuyPriceMin()
 	                ));
 	            } else {
-	                break; // Since sorted, no need to check further
+	                break;
 	            }
 	        }
 	    }
