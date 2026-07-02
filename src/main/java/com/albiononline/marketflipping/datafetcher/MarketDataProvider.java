@@ -9,7 +9,7 @@ import com.albiononline.marketflipping.model.MarketData;
 import lombok.NonNull;
 
 abstract sealed class MarketDataProvider
-	permits AlbionAPIMarketDataProvider, CachedMarketDataProvider {
+	permits AlbionAPIMarketDataProvider {
 
 	protected abstract @NonNull Map<Equipment, List<MarketData>> fetchMarketDataOfEquipments(@NonNull List<Equipment> equipments) ;
 

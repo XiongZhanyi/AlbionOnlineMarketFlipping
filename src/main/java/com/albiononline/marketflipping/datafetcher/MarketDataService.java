@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
 import com.albiononline.marketflipping.model.Enchantment;
 import com.albiononline.marketflipping.model.Equipment;
 import com.albiononline.marketflipping.model.EquipmentType;
@@ -18,9 +20,11 @@ import com.albiononline.marketflipping.model.Tier;
 
 import lombok.NonNull;
 
+// @Service
 public class MarketDataService {
 	private @NonNull EquipmentTypeWrapper equipmentTypeWrapper;
 	private @NonNull MarketDataCache marketDataCache;
+	private @NonNull MarketDataRefreshService dataRefreshService;
 	
 	public MarketDataService() {
 	    this.equipmentTypeWrapper = new EquipmentTypeWrapper();
@@ -28,11 +32,11 @@ public class MarketDataService {
 	    List<Equipment> allEquipment = buildAllEquipment();
 
 	    this.marketDataCache = new MarketDataCache();
-	    MarketDataRefreshService dataRefreshService = new MarketDataRefreshService(new AlbionAPIMarketDataProvider(), marketDataCache);
+	    dataRefreshService = new MarketDataRefreshService(new AlbionAPIMarketDataProvider(), marketDataCache);
 	    dataRefreshService.start(allEquipment);
 	}
 	
-	public List<FlippingOpportunity> findFlippingOportunity() {
+	public List<FlippingOpportunity> findFlippingOpportunity() {
 	    Map<Equipment, List<MarketData>> marketDataOfEquipment = 
 	    		marketDataCache.fetchMarketDataOfEquipments(buildAllEquipment());
 	    
@@ -82,7 +86,8 @@ public class MarketDataService {
 	                    sellData.getCity(), 
 	                    buyData.getCity(), 
 	                    sellData.getSellPriceMin(), 
-	                    buyData.getBuyPriceMin()
+	                    buyData.getBuyPriceMin(),
+	                    sellData.getSellPriceMinDate().isAfter(buyData.getBuyPriceMinDate()) ? buyData.getBuyPriceMinDate() : sellData.getSellPriceMinDate()   
 	                ));
 	            } else {
 	                break;
