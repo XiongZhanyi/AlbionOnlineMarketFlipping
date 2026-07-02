@@ -1,0 +1,44 @@
+#lymhurst:checked {
+  background-color: #7FB347 !important;
+  border-color: #7FB347 !important;
+}
+
+#bridgewatch:checked {
+  background-color: #FF8C42 !important;
+  border-color: #FF8C42 !important;
+}
+
+#martlock:checked {
+  background-color: #1E3A8A !important;
+  border-color: #1E3A8A !important;
+}
+
+#thetfort:checked {
+  background-color: #9D6FE8 !important;
+  border-color: #9D6FE8 !important;
+}
+
+#fortsterling:checked {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23000'/%3e%3c/svg%3e") !important;
+}
+
+#brecilien:checked {
+  background-color: #5DB3D3 !important;
+  border-color: #5DB3D3 !important;
+}
+
+#caerleon:checked {
+  background-color: #B22222 !important;
+  border-color: #B22222 !important;
+}
+
+#blackmarket:checked {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+}
+
+.form-switch .form-check-input:focus {
+    box-shadow: none;
+}
